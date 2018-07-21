@@ -1,0 +1,50 @@
+{
+  "manifest_version": 2,
+
+  "name": "SpigotSearchEngine",
+  "version": "2.0",
+  "description": "SpigotMC Search Engine",
+
+  "icons":
+  {
+    "128": "SpigotSearchEngine.png",
+    "16": "SpigotSearchEngine.png",
+    "48": "SpigotSearchEngine.png"
+  },
+  "browser_action": {
+    "default_icon": "SpigotSearchEngine.png"
+  },
+  "permissions": [
+    "activeTab",
+    "https://fof1092.de/Plugins/SSE/resourceSearch.php*",
+    "https://fof1092.de/Plugins/SSE/randomPlugin.php*"
+  ],
+  "content_scripts": [{
+    "js": [
+            "SSELocalStorage.js",
+            "Resources/Classes/ResourceAuthor.js",
+            "Resources/Classes/ResourceCategorie.js",
+            "Resources/Classes/ResourceDownload.js",
+            "Resources/Classes/ResourceLanguage.js",
+            "Resources/Classes/ResourcePremium.js",
+            "Resources/Classes/ResourceRating.js",
+            "Resources/Classes/ResourceSupportedMCVersions.js",
+            "Resources/Classes/ResourceTime.js",
+            "Resources/Resource.js",
+            "Resources/ResourceListener.js",
+            "SSEGuiManager.js",
+            "SpigotSearchEngine.js"
+          ],
+    "css": ["SpigotSearchEngine.css"],
+    "matches": [
+      "https://www.spigotmc.org/resources/",
+      "https://www.spigotmc.org/resources/?*",
+      "https://www.spigotmc.org/resources/categories/*"
+    ],
+    "run_at": "document_idle"
+  }],
+  "background" : {
+    "scripts" : ["SpigotSearchEngineBackground.js"]
+  }
+
+}

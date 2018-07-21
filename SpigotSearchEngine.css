@@ -1,0 +1,252 @@
+/* SortByBox */
+
+.SortByBox {
+  min-height: 20px;
+  line-height: 20px;
+  width: 100px;
+  border: 1px solid rgb(217, 217, 217);
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 5px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+@media only screen and (min-width:700px) {
+  .SortByBox {
+    float: left;
+  }
+}
+
+@media only screen and (max-width:700px) {
+  .SortByBox {
+    float: left;
+  }
+}
+
+
+/* SortCategorie */
+
+.SortCategorie {
+  min-height: 20px;
+  line-height: 20px;
+  width: 140px;
+  border: 1px solid rgb(217, 217, 217);
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 5px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+  float: left;
+}
+
+@media only screen and (min-width:700px) {
+  .SortCategorie {
+    float: left;
+  }
+}
+
+@media only screen and (max-width:700px) {
+  .SortCategorie {
+    float: left;
+  }
+}
+
+
+/* SortByBoxButtonLinkStyle */
+
+.SortByBoxButtonLinkStyle {
+  background:none !important;
+  color:inherit;
+  border:none;
+  padding:0 !important;
+  font: inherit;
+  cursor: pointer;
+  color: rgb(144,142,142);
+  font-weight: 600;
+  padding: 6px 12px;
+  text-size-adjust: 100%;
+  font-family: 'Droid Sans',Arial,sans-serif;
+  outline:0;
+}
+
+.SortByBoxButtonLinkStyle:hover {
+  color: rgb(44,44,45);
+}
+
+
+/* SortByBoxButtonLinkStyleClicked */
+
+.SortByBoxButtonLinkStyleClicked {
+  color: rgb(237, 129, 6);
+}
+
+.SortByBoxButtonLinkStyleClicked:hover {
+  color: rgb(237, 129, 6);
+}
+
+
+/* ButtonSearchResources */
+
+.ButtonSearchResources {
+  border:none;
+  text-size-adjust: 100%;
+  font-size: 12px;
+  font-family: 'Droid Sans',Arial,sans-serif;
+  margin-bottom: 16px;
+  outline:0;
+  padding-left: 10px;
+  padding-right: 10px;
+  left: 0;
+  font-weight: bold;
+  font-size: 16px;
+  color: #FFF;
+  background-color: rgb(58,101,129);
+  cursor: pointer;
+  box-sizing: border-box;
+  text-shadow: 0 1px rgba(0,0,0,.25);
+  height: 34px;
+}
+
+@media only screen and (min-width:700px) {
+  .ButtonSearchResources {
+    margin-right: 20px;
+    border-radius: 0px 5px 5px 0px;
+  }
+}
+
+@media only screen and (max-width:700px) {
+  .ButtonSearchResources {
+    border-radius: 5px 5px 5px 5px;
+  }
+}
+
+.ButtonSearchResources:hover {
+  background-color: #ed8106;
+}
+.ButtonSearchResources:active {
+  background-color: rgb(44,44,44);
+}
+
+
+/* InputSearchResources */
+
+.InputSearchResources {
+  color: #404040;
+  background-color: #FFFFFF;
+  border: 2px solid rgb(58,101,129);
+
+  outline:0;
+
+  text-size-adjust: 100%;
+  font-size: 12px;
+  font-family: 'Droid Sans',Arial,sans-serif;
+
+  margin-bottom: 16px;
+
+  padding-left: 10px;
+  padding-right: 10px;
+
+  left: 0;
+  font-weight: bold;
+  font-size: 16px;
+  box-sizing: border-box;
+  height: 34px;
+}
+
+@media only screen and (min-width:700px) {
+  .InputSearchResources {
+    border-radius: 5px 0px 0px 5px;
+  }
+}
+
+@media only screen and (max-width:700px) {
+  .InputSearchResources {
+    margin-right: 10px;
+    border-radius: 5px 5px 5px 5px;
+  }
+}
+
+
+/* SpigotMCSearchEngineBack */
+
+.ButtonBack {
+  border:none;
+
+  text-size-adjust: 100%;
+  font-size: 12px;
+  font-family: 'Droid Sans',Arial,sans-serif;
+
+  margin-bottom: 16px;
+
+  outline:0;
+
+  padding-left: 10px;
+  padding-right: 10px;
+
+  left: 0;
+  font-weight: bold;
+  font-size: 16px;
+  color: #FFF;
+  background-color: rgb(58,101,129);
+  cursor: pointer;
+  box-sizing: border-box;
+  text-shadow: 0 1px rgba(0,0,0,.25);
+  height: 34px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+@media only screen and (min-width:700px) {
+  .ButtonBack {
+    float: right;
+    margin-right: 20px;
+  }
+}
+
+@media only screen and (max-width:700px) {
+  .ButtonBack {
+    margin-left: 10px;
+  }
+}
+
+.ButtonBack:hover {
+  background-color: #ed8106;
+}
+.ButtonBack:active {
+  background-color: rgb(44,44,44);
+}
+
+
+/* MyFeaturedResources */
+
+.MyFeaturedResources {
+  margin-right: 8px !important;
+  margin-left: 8px  !important;
+}
+
+
+/* MyFeaturedResourcesTextHeading */
+
+.MyFeaturedResourcesTextHeading {
+    font-size: 14px;
+    color: rgb(240, 182, 28);
+    padding-bottom: 4px;
+    margin: 8px auto;
+    font-weight: 600;
+    text-align: center;
+}
+
+
+/* MyFeaturedResourcesListPlacholder */
+
+.MyFeaturedResourcesListPlacholder {
+  border-bottom: rgb(217, 217, 217) solid 1px;
+  padding-bottom: 16px;
+}
+
+
+/* Primary Content Menu Header */
+
+.PrimaryContentMenuHeader {
+  margin-bottom: 6px;
+}
