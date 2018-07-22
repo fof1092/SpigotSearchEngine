@@ -51,9 +51,11 @@ class SSEGuiManager {
       cbCategorie.classList.add('Disabler');
 
       cbCategorie.onclick = function() {
-        if (SSELocalStorag.getBoolean(categorie['type'])) {
-          document.getElementById('Checkbox_CategoriePaidPlugin').checked = true;
-          SSELocalStorag.setItem('CategoriePaidPlugin', true);
+        if (categorie['type'] != 'CategoriePaidPlugin') {
+          if (!SSELocalStorag.getBoolean(categorie['type'])) {
+            document.getElementById('Checkbox_CategoriePaidPlugin').checked = true;
+            SSELocalStorag.setItem('CategoriePaidPlugin', true);
+          }
         }
 
         SSELocalStorag.setItem(categorie['type'], !SSELocalStorag.getBoolean(categorie['type']));
@@ -249,6 +251,7 @@ class SSEGuiManager {
 
     let types = [
       { type: 'Version_Unknown', text: ' Unknown' },
+      { type: 'Version_v1_13', text: ' 1.13' },
       { type: 'Version_v1_12', text: ' 1.12' },
       { type: 'Version_v1_11', text: ' 1.11' },
       { type: 'Version_v1_10', text: ' 1.10' },

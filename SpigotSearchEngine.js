@@ -35,25 +35,32 @@ bntSearchResources.classList.add('ButtonSearchResources');
 
 bntSearchResources.onclick = function() {
 
-  /* On FirstClick */
+  if (!bntSearchResources.disabled) {
+    bntSearchResources.disabled = true;
+    inpSearchResources.readOnly = true;
 
-  if (firstClick) {
-    ResourceListener.loadRandomResources();
+    /* On FirstClick */
 
-    /* Cosmetic remove */
-    document.getElementsByClassName("PageNav")[0].remove();
+    if (firstClick) {
+      ResourceListener.loadRandomResources();
 
-    firstClick = false;
+      /* Cosmetic remove */
+      document.getElementsByClassName("PageNav")[0].remove();
+
+      firstClick = false;
+    }
+
+
+    /* Read the imput from the created Search_Resources_Input. */
+
+    let inpSearchResourcesText = inpSearchResources.value;
+
+    bntSearchResources.style.backgroundColor = '#ed8106';
+    inpSearchResources.style.backgroundColor = '#f0f0f0';
+    inpSearchResources.style.borderColor = '#ed8106';
+
+    ResourceListener.loadResources(inpSearchResourcesText);
   }
-
-
-  /* Read the imput from the created Search_Resources_Input. */
-
-  let inpSearchResourcesText = inpSearchResources.value;
-
-
-  ResourceListener.loadResources(inpSearchResourcesText)
-
 };
 
 let tnSearchResources = document.createTextNode("Search Resources");

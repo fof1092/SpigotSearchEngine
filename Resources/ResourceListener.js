@@ -36,6 +36,16 @@ class ResourceListener {
            }
 
            ResourceListener.sortAndDisplay();
+
+
+           setTimeout(function afterTwoSeconds() {
+             bntSearchResources.style.backgroundColor = '#3a6581';
+             inpSearchResources.style.backgroundColor = '#ffffff';
+             inpSearchResources.style.borderColor = '#3a6581';
+
+             bntSearchResources.disabled = false;
+             inpSearchResources.readOnly = false;
+           }, 1000)
          });
        }
      )
@@ -140,6 +150,11 @@ class ResourceListener {
             return true;
           }
           break;
+          case "1.13":
+            if (SSELocalStorag.getBoolean("Version_v1_13")) {
+              return true;
+            }
+            break;
         case "1.12":
           if (SSELocalStorag.getBoolean("Version_v1_12")) {
             return true;
@@ -237,20 +252,38 @@ class ResourceListener {
   static isinResourceName(resourceName) {
     //SearchType = contains
     if (SSELocalStorag.getItem("SearchType") == 0) {
-      for (let serachTextWord of resourceSearchText.split(' ')) {
+      let searchTextWordsNotFound = resourceSearchText.split(' ');
 
+      for (let serachTextWord of resourceSearchText.split(' ')) {
         if (resourceName.toLowerCase().includes(serachTextWord.toLowerCase())) {
-          return true;
+
+          if (searchTextWordsNotFound.includes(serachTextWord)) {
+            searchTextWordsNotFound.splice(searchTextWordsNotFound.indexOf(serachTextWord), 1);
+          }
+
+          if (searchTextWordsNotFound.length == 0) {
+            return true;
+          }
+
         }
       }
 
     //SearchType = Equals
     } else if (SSELocalStorag.getItem("SearchType") == 1) {
+      let searchTextWordsNotFound = resourceSearchText.split(' ');
+
       for (let serachTextWord of resourceSearchText.split(' ')) {
         for (let resourceNameWord of resourceName.split(' ')) {
-
           if (serachTextWord.toLowerCase() == resourceNameWord.toLowerCase()) {
-            return true;
+
+            if (searchTextWordsNotFound.includes(serachTextWord)) {
+              searchTextWordsNotFound.splice(searchTextWordsNotFound.indexOf(serachTextWord), 1);
+            }
+
+            if (searchTextWordsNotFound.length == 0) {
+              return true;
+            }
+
           }
         }
       }
@@ -263,20 +296,38 @@ class ResourceListener {
   static isinResourceTag(resourceTag) {
     //SearchType = contains
     if (SSELocalStorag.getItem("SearchType") == 0) {
-      for (let serachTextWord of resourceSearchText.split(' ')) {
+      let searchTextWordsNotFound = resourceSearchText.split(' ');
 
+      for (let serachTextWord of resourceSearchText.split(' ')) {
         if (resourceTag.toLowerCase().includes(serachTextWord.toLowerCase())) {
-          return true;
+
+          if (searchTextWordsNotFound.includes(serachTextWord)) {
+            searchTextWordsNotFound.splice(searchTextWordsNotFound.indexOf(serachTextWord), 1);
+          }
+
+          if (searchTextWordsNotFound.length == 0) {
+            return true;
+          }
+
         }
       }
 
     //SearchType = Equals
     } else if (SSELocalStorag.getItem("SearchType") == 1) {
+      let searchTextWordsNotFound = resourceSearchText.split(' ');
+
       for (let serachTextWord of resourceSearchText.split(' ')) {
         for (let resourceTagWord of resourceTag.split(' ')) {
+          if (serachTextWord.toLowerCase() == resourceTagWord.toLowerCase()) {
 
-          if (resourceTagWord.toLowerCase() == resourceTagWord.toLowerCase()) {
-            return true;
+            if (searchTextWordsNotFound.includes(serachTextWord)) {
+              searchTextWordsNotFound.splice(searchTextWordsNotFound.indexOf(serachTextWord), 1);
+            }
+
+            if (searchTextWordsNotFound.length == 0) {
+              return true;
+            }
+
           }
         }
       }
