@@ -251,7 +251,11 @@ class ResourceListener {
 
   static isinResourceName(resourceName) {
     //SearchType = contains
-    if (SSELocalStorag.getItem("SearchType") == 0) {
+
+    //Currently handled by the Server
+    return true;
+
+    /*if (SSELocalStorag.getItem("SearchType") == 0) {
       let searchTextWordsNotFound = resourceSearchText.split(' ');
 
       for (let serachTextWord of resourceSearchText.split(' ')) {
@@ -287,7 +291,7 @@ class ResourceListener {
           }
         }
       }
-    }
+    }*/
   }
 
 
@@ -295,7 +299,11 @@ class ResourceListener {
 
   static isinResourceTag(resourceTag) {
     //SearchType = contains
-    if (SSELocalStorag.getItem("SearchType") == 0) {
+
+    //Currently handled by the Server
+    return true;
+
+    /*if (SSELocalStorag.getItem("SearchType") == 0) {
       let searchTextWordsNotFound = resourceSearchText.split(' ');
 
       for (let serachTextWord of resourceSearchText.split(' ')) {
@@ -331,7 +339,7 @@ class ResourceListener {
           }
         }
       }
-    }
+    }*/
   }
 
 
