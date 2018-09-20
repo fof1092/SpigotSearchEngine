@@ -23,7 +23,7 @@ class ResourceListener {
      .then(
        function(response) {
          if (response.status !== 200) {
-           console.log('[SpigotMCSearchEngine] ResourceSearch - Error, Status Code: ' + response.status);
+           console.log('[SpigotMCSearchEngine] loadResources - Error, Status Code: ' + response.status);
            return;
          }
 
@@ -32,7 +32,13 @@ class ResourceListener {
            resourceSearchText = inpSearchResourcesText;
 
            for (let resource of data) {
-             resources.push(new Resource(resource));
+             try {
+                 resources.push(new Resource(resource));
+             } catch(err) {
+                 console.log('[SpigotMCSearchEngine] loadResources - (Resource: ' + resource.id + ') Error: ' + err);
+
+                 alert('[SpigotMCSearchEngine] Loading error for Resource: ' + resource.id + ', please send me (F_o_F_1092) this message!');
+             }
            }
 
            ResourceListener.sortAndDisplay();
@@ -86,6 +92,12 @@ class ResourceListener {
     }
   }
 
+  static sortByRealeaseDate() {
+      for (let resource of resources) {
+        resource.setPriority(resource.getSubmitTime().getDateTime().getTime());
+      }
+  }
+
 
   static sortAndDisplay() {
 
@@ -98,6 +110,9 @@ class ResourceListener {
         break;
       case "SortByDownloads":
         ResourceListener.sortByDownloads();
+        break;
+      case "SortByRealeaseDate":
+        ResourceListener.sortByRealeaseDate();
         break;
     }
 
@@ -117,7 +132,7 @@ class ResourceListener {
           divResourceListItem[k].parentNode.removeChild(divResourceListItem[k]);
       }
 
-
+      let foundResources = 0;
       for (let resource of resources) {
 
         //In PluginName / PluginTag
@@ -128,11 +143,28 @@ class ResourceListener {
 
             //Selected Version visible
             if (resource.hasSupportedMCVersions() && ResourceListener.isVersionVisible(resource.getSupportedMCVersions().getVersions()) || !resource.hasSupportedMCVersions()) {
+              foundResources++;
 
               divResourceListItemParent.appendChild(resource.getHTML());
             }
           }
         }
+      }
+
+
+      var countUpOptions = {
+        useEasing: true,
+        useGrouping: true,
+        separator: ',',
+        decimal: '.',
+        prefix: 'Resources Found: ',
+      };
+
+      var countUp = new CountUp(document.getElementById("divResourcesFround"), 0, foundResources, 0, foundResources / 100, countUpOptions);
+      if (!countUp.error) {
+      countUp.start();
+      } else {
+        console.error(countUp.error);
       }
     }
   }

@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "SpigotSearchEngine",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "SpigotMC Search Engine",
 
   "icons":
@@ -15,12 +15,14 @@
     "default_icon": "SpigotSearchEngine.png"
   },
   "permissions": [
-    "activeTab",
     "https://fof1092.de/Plugins/SSE/resourceSearch.php*",
-    "https://fof1092.de/Plugins/SSE/randomPlugin.php*"
+    "https://fof1092.de/Plugins/SSE/randomPlugin.php*",
+    "https://www.spigotmc.org/resources/*",
+    "https://www.spigotmc.org/members/*"
   ],
   "content_scripts": [{
     "js": [
+            "Library/countUp.js",
             "SSELocalStorage.js",
             "Resources/Classes/ResourceAuthor.js",
             "Resources/Classes/ResourceCategorie.js",

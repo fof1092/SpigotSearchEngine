@@ -321,7 +321,8 @@ class SSEGuiManager {
     let types = [
       { type: 'SortByPriority', text: 'Plugin Priority' },
       { type: 'SortByUpdate', text: 'Last Update' },
-      { type: 'SortByDownloads', text: 'Downloads' }
+      { type: 'SortByDownloads', text: 'Downloads' },
+      { type: 'SortByRealeaseDate', text: 'Realease Date' }
     ];
 
     for (let categorie of types) {
@@ -366,6 +367,9 @@ class SSEGuiManager {
       case "SortByDownloads":
         return 2;
         break;
+      case "SortByRealeaseDate":
+        return 3;
+        break;
     }
   }
 
@@ -383,6 +387,9 @@ class SSEGuiManager {
       case 2:
         return "SortByDownloads";
         break;
+      case 3:
+        return "SortByRealeaseDate";
+        break;
     }
   }
 
@@ -392,7 +399,8 @@ class SSEGuiManager {
     let types = [
       { type: 'SortByPriority' },
       { type: 'SortByUpdate' },
-      { type: 'SortByDownloads' }
+      { type: 'SortByDownloads' },
+      { type: 'SortByRealeaseDate' }
     ];
 
     for (let categorie of types) {
