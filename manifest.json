@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "SpigotSearchEngine",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "SpigotMC Search Engine",
 
   "icons":
@@ -17,6 +17,7 @@
   "permissions": [
     "https://fof1092.de/Plugins/SSE/resourceSearch.php*",
     "https://fof1092.de/Plugins/SSE/randomPlugin.php*",
+    "https://fof1092.de/Plugins/SSE/status.php*",
     "https://www.spigotmc.org/resources/*",
     "https://www.spigotmc.org/members/*"
   ],
@@ -34,6 +35,7 @@
             "Resources/Classes/ResourceTime.js",
             "Resources/Resource.js",
             "Resources/ResourceListener.js",
+            "SSEStatus.js",
             "SSEGuiManager.js",
             "SpigotSearchEngine.js"
           ],

@@ -1,6 +1,25 @@
+/* infoBox */
+
+.infoBox {
+  display:inline-block;
+
+  width: 100%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-bottom: 13px;
+  border-radius: 5px 5px 5px 5px;
+
+  text-align: center;
+  text-shadow: 0 1px rgba(0,0,0,.25);
+  text-size-adjust: 100%;
+  color: #FFF;
+  font-family: 'Droid Sans',Arial,sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+
 /* ResourcesFround */
-
-
 
 .divResourcesFround {
   display:inline-block;
@@ -205,55 +224,6 @@
     margin-right: 10px;
     border-radius: 5px 5px 5px 5px;
   }
-}
-
-
-/* SpigotMCSearchEngineBack */
-
-.ButtonBack {
-  border:none;
-
-  text-size-adjust: 100%;
-  font-size: 12px;
-  font-family: 'Droid Sans',Arial,sans-serif;
-
-  margin-bottom: 16px;
-
-  outline:0;
-
-  padding-left: 10px;
-  padding-right: 10px;
-
-  left: 0;
-  font-weight: bold;
-  font-size: 16px;
-  color: #FFF;
-  background-color: rgb(58,101,129);
-  cursor: pointer;
-  box-sizing: border-box;
-  text-shadow: 0 1px rgba(0,0,0,.25);
-  height: 34px;
-  border-radius: 5px 5px 5px 5px;
-}
-
-@media only screen and (min-width:700px) {
-  .ButtonBack {
-    float: right;
-    margin-right: 20px;
-  }
-}
-
-@media only screen and (max-width:700px) {
-  .ButtonBack {
-    margin-left: 10px;
-  }
-}
-
-.ButtonBack:hover {
-  background-color: #ed8106;
-}
-.ButtonBack:active {
-  background-color: rgb(44,44,44);
 }
 
 

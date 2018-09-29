@@ -7,6 +7,11 @@ let firstClick = true;
 let divActionFilterRow = document.getElementsByClassName("actionFilterRow")[0];
 
 
+/* SSEStatusLoadStatus */
+
+SSEStatus.loadStatus();
+
+
 /* InputSearchResources */
 
 let inpSearchResources = document.createElement("input");
@@ -83,22 +88,6 @@ let tnResourcesFround = document.createTextNode("Resources Found: ");
 
 divResourcesFround.appendChild(tnResourcesFround);
 divActionFilterRow.appendChild(divResourcesFround);
-
-
-
-/* BackButton */
-
-let bntBack = document.createElement("button");
-bntBack.classList.add('ButtonBack');
-
-bntBack.onclick = function() {
-  location.reload();
-};
-
-let tnBack = document.createTextNode("Back");
-
-bntBack.appendChild(tnBack);
-divActionFilterRow.appendChild(bntBack);
 
 
 
