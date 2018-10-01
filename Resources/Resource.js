@@ -167,7 +167,7 @@ class Resource {
   }
 
   getSourceCodeLink() {
-    return this.pluginSourceCode;
+    return this.sourceCode;
   }
 
   hasSourceCodeLink() {

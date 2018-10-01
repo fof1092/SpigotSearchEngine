@@ -10,7 +10,7 @@ class SSEStatus {
        function(response) {
          if (response.status !== 200) {
            console.log('[SpigotMCSearchEngine] loadStatus - Error, Status Code: ' + response.status);
-           SSEStatus.displayStatus('Something unexpected has happened, please send me a message! @F_o_F_1092', '#ef1c1c');
+           SSEStatus.displayStatus('Something unexpected has happened, please send me a message! @F_o_F_1092  (' + err + ')', '#ef1c1c');
            return;
          }
 
@@ -24,7 +24,7 @@ class SSEStatus {
      )
      .catch(function(err) {
        console.log('[SpigotMCSearchEngine] loadStatus - Fetching Error: ', err);
-       SSEStatus.displayStatus('Something unexpected has happened, please send me a message! @F_o_F_1092', '#ef1c1c');
+       SSEStatus.displayStatus('Something unexpected has happened, please send me a message! @F_o_F_1092  (' + err + ')', '#ef1c1c');
      });
   }
 

@@ -2,6 +2,10 @@
   The SSEGuiManager.js is used to setup all Gui Checkboxes
 */
 
+
+/* Used to save the "ExtraOptions..."*/
+var showExtras;
+
 class SSEGuiManager {
 
   /* showCategories */
@@ -415,6 +419,95 @@ class SSEGuiManager {
         bntSortBy.classList.add('SortByBoxButtonLinkStyleClicked');
       }
     }
+  }
+
+
+  /* showExtras */
+
+  static showExtras() {
+    let divSortByBox = document.createElement("div");
+    divSortByBox.classList.add('SortByBox');
+
+    /* Primary Content Menu Heade */
+
+    let divPrimaryContentMenuHeader = document.createElement("div");
+    divPrimaryContentMenuHeader.classList.add('primaryContent');
+    divPrimaryContentMenuHeader.classList.add('menuHeader');
+    divPrimaryContentMenuHeader.classList.add('PrimaryContentMenuHeader');
+    let tnPrimaryContentMenuHeader = document.createTextNode("Extras...");
+
+    divPrimaryContentMenuHeader.appendChild(tnPrimaryContentMenuHeader);
+    divSortByBox.appendChild(divPrimaryContentMenuHeader);
+
+
+    /* Primary Content Menu Heade */
+
+    let ulBlockLinksList = document.createElement("ul");
+    ulBlockLinksList.classList.add('blockLinksList');
+
+
+    let types = [
+      { type: 'Extras_OnlyOpenSource', text: ' Only Open Source' },
+    ];
+
+    for (let categorie of types) {
+      let liExtras = document.createElement("li");
+
+      let cbExtras = document.createElement("input");
+      cbExtras.type = 'checkbox';
+      cbExtras.checked = false;
+      cbExtras.id = 'Checkbox_' + categorie['type'];
+      cbExtras.classList.add('Disabler');
+
+      cbExtras.onclick = function() {
+        SSEGuiManager.unsetExtras('Checkbox_' + categorie['type']);
+
+        ResourceListener.sortAndDisplay();
+      }
+
+      let tnExtras = document.createTextNode(categorie['text']);
+
+
+      liExtras.appendChild(cbExtras);
+      liExtras.appendChild(tnExtras);
+      ulBlockLinksList.appendChild(liExtras);
+    }
+
+
+    /* Final adding */
+    divSortByBox.appendChild(ulBlockLinksList);
+    document.getElementById('divSortBox').appendChild(divSortByBox);
+  }
+
+  /* Set Sort By Box Button Color */
+
+  static unsetExtras(exceptFrom) {
+    let types = [
+      { type: 'Extras_OnlyOpenSource', text: ' Only Open Source' },
+    ];
+
+
+    for (let categorie of types) {
+      let cbExtras = document.getElementById("Checkbox_" + categorie['type']);
+
+      if (exceptFrom != ("Checkbox_" + categorie['type'])) {
+        cbExtras.checked = false;
+      } else {
+        if (cbExtras.checked) {
+          showExtras = categorie['type'];
+        } else {
+          showExtras = null;
+        }
+      }
+
+    }
+  }
+
+  static isShowExtrasSet(type) {
+    if (showExtras == type) {
+      return true;
+    }
+    return false;
   }
 
 }

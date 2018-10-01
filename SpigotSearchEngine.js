@@ -84,7 +84,7 @@ divActionFilterRow.appendChild(bntSearchResources);
 let divResourcesFround = document.createElement("div");
 divResourcesFround.classList.add('divResourcesFround');
 divResourcesFround.id = 'divResourcesFround';
-let tnResourcesFround = document.createTextNode("Resources Found: ");
+let tnResourcesFround = document.createTextNode("Resources Found: 0");
 
 divResourcesFround.appendChild(tnResourcesFround);
 divActionFilterRow.appendChild(divResourcesFround);
@@ -101,6 +101,7 @@ SSEGuiManager.showSearchOn();
 SSEGuiManager.showCategories();
 SSEGuiManager.showVersions();
 SSEGuiManager.showSearchType();
+SSEGuiManager.showExtras();
 SSEGuiManager.showSortByBox();
 
 

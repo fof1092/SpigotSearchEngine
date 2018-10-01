@@ -36,8 +36,6 @@ class ResourceListener {
                  resources.push(new Resource(resource));
              } catch(err) {
                  console.log('[SpigotMCSearchEngine] loadResources - (Resource: ' + resource.id + ') Error: ' + err);
-
-                 alert('[SpigotMCSearchEngine] Loading error for Resource: ' + resource.id + ', please send me (F_o_F_1092) this message!');
              }
            }
 
@@ -143,9 +141,13 @@ class ResourceListener {
 
             //Selected Version visible
             if (resource.hasSupportedMCVersions() && ResourceListener.isVersionVisible(resource.getSupportedMCVersions().getVersions()) || !resource.hasSupportedMCVersions()) {
-              foundResources++;
 
-              divResourceListItemParent.appendChild(resource.getHTML());
+              //Extras...
+              if (SSEGuiManager.isShowExtrasSet('Extras_OnlyOpenSource') && resource.hasSourceCodeLink() || !SSEGuiManager.isShowExtrasSet('Extras_OnlyOpenSource')) {
+                foundResources++;
+
+                divResourceListItemParent.appendChild(resource.getHTML());
+              }
             }
           }
         }
@@ -384,7 +386,18 @@ class ResourceListener {
 
   static loadRandomResources() {
 
-    fetch('https://fof1092.de/Plugins/SSE/randomPlugin.php')
+    let pics = Array('https://i.imgur.com/uK9JSKp.png', 'https://i.imgur.com/xRHb4w4.png', 'https://i.imgur.com/fK2ptjN.png', 'https://i.imgur.com/X9dmjAc.png', 'https://i.imgur.com/X9dmjAc.png');
+    let rndPic = pics[Math.floor(Math.random()*pics.length)];
+
+    let divSection = document.createElement("div");
+    divSection.classList.add('section');
+    divSection.innerHTML = '<h2 class="MyFeaturedResourcesTextHeading"><a href="https://goo.gl/km4uKo" class="username">MysteriousHalloweenPlus - From the Developer of the SpigotSearchEngine Extension! :)</a></h2><a href="https://goo.gl/km4uKo"><img src="' + rndPic + '" style="width:100%" alt="MysteriousHalloweenPlus"></a><div class="MyFeaturedResourcesListPlacholder"></div>';
+
+    divActionFilterRow.parentNode.insertBefore(divSection, divActionFilterRow.nextSibling);
+
+    //Halloween Time! :)
+
+    /*fetch('https://fof1092.de/Plugins/SSE/randomPlugin.php')
      .then(
        function(response) {
          if (response.status !== 200) {
@@ -394,9 +407,15 @@ class ResourceListener {
 
          response.json().then(function(data) {
 
+           let featuredResources = '';
+
+           for (let resource in data) {
+             featuredResources += ResourceListener.getFeaturedResource(resource);
+           }
+
            let divSection = document.createElement("div");
            divSection.classList.add('section');
-           divSection.innerHTML = '<h2 class="MyFeaturedResourcesTextHeading">Plugins from <a href="resources/authors/43899/" class="username">F_o_F_1092</a>, the Developer of the SpigotSearchEngine Extension :)</h2><ol class="featuredResourceList">' + ResourceListener.getFeaturedResource(data[0]) + ResourceListener.getFeaturedResource(data[1]) + '</ol><div class="MyFeaturedResourcesListPlacholder"></div>';
+           divSection.innerHTML = '<h2 class="MyFeaturedResourcesTextHeading">Plugins from <a href="resources/authors/43899/" class="username">F_o_F_1092</a>, the Developer of the SpigotSearchEngine Extension :)</h2><ol class="featuredResourceList">' + featuredResources + '</ol><div class="MyFeaturedResourcesListPlacholder"></div>';
 
            divActionFilterRow.parentNode.insertBefore(divSection, divActionFilterRow.nextSibling);
          });
@@ -404,7 +423,7 @@ class ResourceListener {
      )
      .catch(function(err) {
        console.log('[SpigotMCSearchEngine] RandomPlugin - Fetching Error: ', err);
-     });
+     });*/
   }
 
 
