@@ -385,19 +385,7 @@ class ResourceListener {
   */
 
   static loadRandomResources() {
-
-    let pics = Array('https://i.imgur.com/uK9JSKp.png', 'https://i.imgur.com/xRHb4w4.png', 'https://i.imgur.com/fK2ptjN.png', 'https://i.imgur.com/X9dmjAc.png', 'https://i.imgur.com/X9dmjAc.png');
-    let rndPic = pics[Math.floor(Math.random()*pics.length)];
-
-    let divSection = document.createElement("div");
-    divSection.classList.add('section');
-    divSection.innerHTML = '<h2 class="MyFeaturedResourcesTextHeading"><a href="https://goo.gl/km4uKo" class="username">MysteriousHalloweenPlus - From the Developer of the SpigotSearchEngine Extension! :)</a></h2><a href="https://goo.gl/km4uKo"><img src="' + rndPic + '" style="width:100%" alt="MysteriousHalloweenPlus"></a><div class="MyFeaturedResourcesListPlacholder"></div>';
-
-    divActionFilterRow.parentNode.insertBefore(divSection, divActionFilterRow.nextSibling);
-
-    //Halloween Time! :)
-
-    /*fetch('https://fof1092.de/Plugins/SSE/randomPlugin.php')
+    fetch('https://fof1092.de/Plugins/SSE/randomPlugin.php')
      .then(
        function(response) {
          if (response.status !== 200) {
@@ -409,7 +397,7 @@ class ResourceListener {
 
            let featuredResources = '';
 
-           for (let resource in data) {
+           for (let resource of data) {
              featuredResources += ResourceListener.getFeaturedResource(resource);
            }
 
@@ -423,7 +411,7 @@ class ResourceListener {
      )
      .catch(function(err) {
        console.log('[SpigotMCSearchEngine] RandomPlugin - Fetching Error: ', err);
-     });*/
+     });
   }
 
 

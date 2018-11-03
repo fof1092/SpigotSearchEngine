@@ -3,7 +3,7 @@
   The SSElocalStorage.js is setting up at the first use
 */
 
-let SSEVersion = "2.0.5";
+let SSEVersion = "2.0.6";
 
 class SSELocalStorag {
 
