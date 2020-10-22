@@ -184,6 +184,21 @@ class ResourceListener {
             return true;
           }
           break;
+          case "1.16":
+            if (SSELocalStorag.getBoolean("Version_v1_16")) {
+              return true;
+            }
+            break;
+          case "1.15":
+            if (SSELocalStorag.getBoolean("Version_v1_15")) {
+              return true;
+            }
+            break;
+          case "1.14":
+            if (SSELocalStorag.getBoolean("Version_v1_14")) {
+              return true;
+            }
+            break;
           case "1.13":
             if (SSELocalStorag.getBoolean("Version_v1_13")) {
               return true;
@@ -412,6 +427,25 @@ class ResourceListener {
      .catch(function(err) {
        console.log('[SpigotMCSearchEngine] RandomPlugin - Fetching Error: ', err);
      });
+
+    /* CSP
+    
+    let divSection = document.createElement("div");
+    divSection.classList.add('section');
+    divSection.innerHTML = '<h2 class="MyFeaturedResourcesTextHeading"><a href="https://goo.gl/BbtCLe" class="username">ChristmasSurprisePlus - From the Developer of the SpigotSearchEngine Extension! :)</a></h2><a href="https://goo.gl/BbtCLe"><img src="https://i.imgur.com/igh1L7W.png" style="width:100%" alt="ChristmasSurprisePlus"></a><div class="MyFeaturedResourcesListPlacholder"></div>';
+    divActionFilterRow.parentNode.insertBefore(divSection, divActionFilterRow.nextSibling);*/
+
+
+
+    /* Halloween
+
+    let rndNr = Math.floor((Math.random() * 5) + 1);
+    let imgURL = 'https://fof1092.de/Plugins/SSE/mhp_' + rndNr + '.png';
+
+    let divSection = document.createElement("div");
+    divSection.classList.add('section');
+    divSection.innerHTML = '<h2 class="MyFeaturedResourcesTextHeading"><a href="https://goo.gl/BbtCLe" class="username">MysteriousHalloweenPlus - From the Developer of the SpigotSearchEngine Extension! :)</a></h2><a href="https://www.spigotmc.org/resources/47648/"><img src="' + imgURL + '" style="width:100%" alt="ChristmasSurprisePlus"></a><div class="MyFeaturedResourcesListPlacholder"></div>';
+    divActionFilterRow.parentNode.insertBefore(divSection, divActionFilterRow.nextSibling);*/
   }
 
 
