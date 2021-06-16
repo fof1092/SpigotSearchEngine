@@ -1,5 +1,4 @@
 class ResourceCategorie {
-
   constructor(categorieIDObj) {
     this.id = categorieIDObj;
   }
@@ -9,7 +8,7 @@ class ResourceCategorie {
   }
 
   getName() {
-    switch(this.id) {
+    switch (this.id) {
       case 2:
         return "Bungeecord - Spigot";
         break;
@@ -95,7 +94,12 @@ class ResourceCategorie {
   }
 
   getHTML() {
-    return', <a href="resources/categories/' + this.getID() + '">' + this.getName() + '</a>';
+    return (
+      ', <a href="resources/categories/' +
+      this.getID() +
+      '">' +
+      this.getName() +
+      "</a>"
+    );
   }
-
 }

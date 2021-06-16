@@ -8,57 +8,63 @@ let resourceSearchText;
 let divResourceListItem = document.getElementsByClassName("resourceListItem");
 let divResourceListItemParent = divResourceListItem[0].parentNode;
 
-
 class ResourceListener {
-
-
   /*
     loadResources is requesting the Resource informations from my Service, after clicking on the "Search Resources" button
     An detailed information about "https://fof1092.de/Plugins/SSE/resourceSearch.php" will follow (It's on my ToDo list :) )
   */
 
   static loadResources(inpSearchResourcesText) {
+    fetch(
+      "https://fof1092.de/Plugins/SSE/resourceSearch.php?SearchText=" +
+        inpSearchResourcesText.replace(" ", "%20") +
+        ResourceListener.getUserID()
+    )
+      .then(function (response) {
+        if (response.status !== 200) {
+          console.log(
+            "[SpigotMCSearchEngine] loadResources - Error, Status Code: " +
+              response.status
+          );
+          return;
+        }
 
-    fetch('https://fof1092.de/Plugins/SSE/resourceSearch.php?SearchText=' + inpSearchResourcesText.replace(" ", "%20") + ResourceListener.getUserID())
-     .then(
-       function(response) {
-         if (response.status !== 200) {
-           console.log('[SpigotMCSearchEngine] loadResources - Error, Status Code: ' + response.status);
-           return;
-         }
+        response.json().then(function (data) {
+          resources = [];
+          resourceSearchText = inpSearchResourcesText;
 
-         response.json().then(function(data) {
-           resources = [];
-           resourceSearchText = inpSearchResourcesText;
+          for (let resource of data) {
+            try {
+              resources.push(new Resource(resource));
+            } catch (err) {
+              console.log(
+                "[SpigotMCSearchEngine] loadResources - (Resource: " +
+                  resource.id +
+                  ") Error: " +
+                  err
+              );
+            }
+          }
 
-           for (let resource of data) {
-             try {
-                 resources.push(new Resource(resource));
-             } catch(err) {
-                 console.log('[SpigotMCSearchEngine] loadResources - (Resource: ' + resource.id + ') Error: ' + err);
-             }
-           }
+          ResourceListener.sortAndDisplay();
 
-           ResourceListener.sortAndDisplay();
+          setTimeout(function afterTwoSeconds() {
+            bntSearchResources.style.backgroundColor = "#3a6581";
+            inpSearchResources.style.backgroundColor = "#ffffff";
+            inpSearchResources.style.borderColor = "#3a6581";
 
-
-           setTimeout(function afterTwoSeconds() {
-             bntSearchResources.style.backgroundColor = '#3a6581';
-             inpSearchResources.style.backgroundColor = '#ffffff';
-             inpSearchResources.style.borderColor = '#3a6581';
-
-             bntSearchResources.disabled = false;
-             inpSearchResources.readOnly = false;
-           }, 1000)
-         });
-       }
-     )
-     .catch(function(err) {
-       console.log('[SpigotMCSearchEngine] ResourceSearch - Fetching Error: ', err);
-     });
+            bntSearchResources.disabled = false;
+            inpSearchResources.readOnly = false;
+          }, 1000);
+        });
+      })
+      .catch(function (err) {
+        console.log(
+          "[SpigotMCSearchEngine] ResourceSearch - Fetching Error: ",
+          err
+        );
+      });
   }
-
-
 
   /* Sorting */
 
@@ -67,21 +73,27 @@ class ResourceListener {
       // 1 icon = 50 | 1 download = 1 | 1 star = 10
 
       let resourcePoints = 0;
-      if (resource.getIcon() != '//static.spigotmc.org/styles/spigot/xenresource/resource_icon.png') {
+      if (
+        resource.getIcon() !=
+        "//static.spigotmc.org/styles/spigot/xenresource/resource_icon.png"
+      ) {
         resourcePoints += 50;
       }
 
       resourcePoints += resource.getDownload().getDownloads();
-      resourcePoints += resource.getRating().getRaters() * resource.getRating().getRating() * 10;
+      resourcePoints +=
+        resource.getRating().getRaters() *
+        resource.getRating().getRating() *
+        10;
 
       resource.setPriority(resourcePoints);
     }
   }
 
   static sortByUpdate() {
-      for (let resource of resources) {
-        resource.setPriority(resource.getUpdateTime().getDateTime().getTime());
-      }
+    for (let resource of resources) {
+      resource.setPriority(resource.getUpdateTime().getDateTime().getTime());
+    }
   }
 
   static sortByDownloads() {
@@ -91,15 +103,13 @@ class ResourceListener {
   }
 
   static sortByRealeaseDate() {
-      for (let resource of resources) {
-        resource.setPriority(resource.getSubmitTime().getDateTime().getTime());
-      }
+    for (let resource of resources) {
+      resource.setPriority(resource.getSubmitTime().getDateTime().getTime());
+    }
   }
 
-
   static sortAndDisplay() {
-
-    switch(SSEGuiManager.getSortByID(SSELocalStorag.getItem('SortBy'))) {
+    switch (SSEGuiManager.getSortByID(SSELocalStorag.getItem("SortBy"))) {
       case "SortByPriority":
         ResourceListener.sortByPriority();
         break;
@@ -127,23 +137,36 @@ class ResourceListener {
     /* Removing current displayed results. */
     if (!firstClick) {
       for (let k = divResourceListItem.length - 1; k >= 0; k--) {
-          divResourceListItem[k].parentNode.removeChild(divResourceListItem[k]);
+        divResourceListItem[k].parentNode.removeChild(divResourceListItem[k]);
       }
 
       let foundResources = 0;
       for (let resource of resources) {
-
         //In PluginName / PluginTag
-        if (SSELocalStorag.getBoolean("SearchOnPluginName") && ResourceListener.isinResourceName(resource.getName()) || SSELocalStorag.getBoolean("SearchOnPluginTag") && ResourceListener.isinResourceTag(resource.getTag())) {
-
+        if (
+          (SSELocalStorag.getBoolean("SearchOnPluginName") &&
+            ResourceListener.isinResourceName(resource.getName())) ||
+          (SSELocalStorag.getBoolean("SearchOnPluginTag") &&
+            ResourceListener.isinResourceTag(resource.getTag()))
+        ) {
           //Selected Categorie Visible
-          if (ResourceListener.isCategorieVisible(resource.getCategorie().getID())) {
-
+          if (
+            ResourceListener.isCategorieVisible(resource.getCategorie().getID())
+          ) {
             //Selected Version visible
-            if (resource.hasSupportedMCVersions() && ResourceListener.isVersionVisible(resource.getSupportedMCVersions().getVersions()) || !resource.hasSupportedMCVersions()) {
-
+            if (
+              (resource.hasSupportedMCVersions() &&
+                ResourceListener.isVersionVisible(
+                  resource.getSupportedMCVersions().getVersions()
+                )) ||
+              !resource.hasSupportedMCVersions()
+            ) {
               //Extras...
-              if (SSEGuiManager.isShowExtrasSet('Extras_OnlyOpenSource') && resource.hasSourceCodeLink() || !SSEGuiManager.isShowExtrasSet('Extras_OnlyOpenSource')) {
+              if (
+                (SSEGuiManager.isShowExtrasSet("Extras_OnlyOpenSource") &&
+                  resource.hasSourceCodeLink()) ||
+                !SSEGuiManager.isShowExtrasSet("Extras_OnlyOpenSource")
+              ) {
                 foundResources++;
 
                 divResourceListItemParent.appendChild(resource.getHTML());
@@ -153,57 +176,60 @@ class ResourceListener {
         }
       }
 
-
       var countUpOptions = {
-        useEasing: true,
-        useGrouping: true,
-        separator: ',',
-        decimal: '.',
-        prefix: 'Resources Found: ',
+        useEasing: true,
+        useGrouping: true,
+        separator: ",",
+        decimal: ".",
+        prefix: "Resources Found: ",
       };
 
-      var countUp = new CountUp(document.getElementById("divResourcesFround"), 0, foundResources, 0, foundResources / 100, countUpOptions);
+      var countUp = new CountUp(
+        document.getElementById("divResourcesFround"),
+        0,
+        foundResources,
+        0,
+        foundResources / 100,
+        countUpOptions
+      );
       if (!countUp.error) {
-      countUp.start();
+        countUp.start();
       } else {
-        console.error(countUp.error);
+        console.error(countUp.error);
       }
     }
   }
-
-
 
   /* isVersionVisible */
 
   static isVersionVisible(versions) {
     for (let version of versions) {
-
-      switch(version) {
+      switch (version) {
         case "Unknown":
           if (SSELocalStorag.getBoolean("Version_Unknown")) {
             return true;
           }
           break;
-          case "1.16":
-            if (SSELocalStorag.getBoolean("Version_v1_16")) {
-              return true;
-            }
-            break;
-          case "1.15":
-            if (SSELocalStorag.getBoolean("Version_v1_15")) {
-              return true;
-            }
-            break;
-          case "1.14":
-            if (SSELocalStorag.getBoolean("Version_v1_14")) {
-              return true;
-            }
-            break;
-          case "1.13":
-            if (SSELocalStorag.getBoolean("Version_v1_13")) {
-              return true;
-            }
-            break;
+        case "1.16":
+          if (SSELocalStorag.getBoolean("Version_v1_16")) {
+            return true;
+          }
+          break;
+        case "1.15":
+          if (SSELocalStorag.getBoolean("Version_v1_15")) {
+            return true;
+          }
+          break;
+        case "1.14":
+          if (SSELocalStorag.getBoolean("Version_v1_14")) {
+            return true;
+          }
+          break;
+        case "1.13":
+          if (SSELocalStorag.getBoolean("Version_v1_13")) {
+            return true;
+          }
+          break;
         case "1.12":
           if (SSELocalStorag.getBoolean("Version_v1_12")) {
             return true;
@@ -242,59 +268,80 @@ class ResourceListener {
     return false;
   }
 
-
   /* isCategorieVisible */
 
   static isCategorieVisible(categorieID) {
-    switch(categorieID) {
+    switch (categorieID) {
       case 2:
-      case 5:
-      case 6:
-      case 7:
-      case 8:
         return SSELocalStorag.getBoolean("CategorieSpigotBungeecord");
-        break;
+      case 5:
+        return SSELocalStorag.getBoolean(
+          "CategorieSpigotBungeecordTransportation"
+        );
+      case 6:
+        return SSELocalStorag.getBoolean("CategorieSpigotBungeecordChat");
+      case 7:
+        return SSELocalStorag.getBoolean(
+          "CategorieSpigotBungeecordToolsAndUtilities"
+        );
+      case 8:
+        return SSELocalStorag.getBoolean("CategorieSpigotBungeecordMisc");
       case 3:
-      case 9:
-      case 10:
-      case 11:
-      case 12:
-      case 13:
         return SSELocalStorag.getBoolean("CategorieBungeecord");
-        break;
+      case 9:
+        return SSELocalStorag.getBoolean("CategorieBungeecordLibrariesAPIs");
+      case 10:
+        return SSELocalStorag.getBoolean("CategorieBungeecordTransportation");
+      case 11:
+        return SSELocalStorag.getBoolean("CategorieBungeecordChat");
+      case 12:
+        return SSELocalStorag.getBoolean(
+          "CategorieBungeecordToolsAndUtilities"
+        );
+      case 13:
+        return SSELocalStorag.getBoolean("CategorieBungeecordMisc");
       case 4:
-      case 14:
-      case 15:
-      case 16:
-      case 17:
-      case 18:
-      case 22:
-      case 23:
-      case 24:
-      case 26:
         return SSELocalStorag.getBoolean("CategorieSpigot");
-        break;
+      case 14:
+        return SSELocalStorag.getBoolean("CategorieSpigotChat");
+      case 15:
+        return SSELocalStorag.getBoolean("CategorieSpigotToolsAndUtilities");
+      case 16:
+        return SSELocalStorag.getBoolean("CategorieSpigotMisc");
+      case 17:
+        return SSELocalStorag.getBoolean("CategorieSpigotFun");
+      case 18:
+        return SSELocalStorag.getBoolean("CategorieSpigotWorldManagement");
+      case 22:
+        return SSELocalStorag.getBoolean("CategorieSpigotMechanics");
+      case 23:
+        return SSELocalStorag.getBoolean("CategorieSpigotEconomy");
+      case 24:
+        return SSELocalStorag.getBoolean("CategorieSpigotGameMode");
+
+      case 26:
+        return SSELocalStorag.getBoolean("CategorieSpigotLibrariesAPIs");
       case 25:
-        return SSELocalStorag.getBoolean("CategorieSkript");
-        break;
+        return (
+          SSELocalStorag.getBoolean("CategorieSkript") ||
+          SSELocalStorag.getBoolean("CategorieSpigotSkript")
+        );
       case 19:
         return SSELocalStorag.getBoolean("CategorieStandalone");
-        break;
       case 20:
         return SSELocalStorag.getBoolean("CategoriePaidPlugin");
-        break;
       case 21:
-        return SSELocalStorag.getBoolean("CategorieSpigot") || SSELocalStorag.getBoolean("CategorieBungeecord") || SSELocalStorag.getBoolean("CategorieSpigotBungeecord");
-        break;
+        return (
+          SSELocalStorag.getBoolean("CategorieSpigot") ||
+          SSELocalStorag.getBoolean("CategorieBungeecord") ||
+          SSELocalStorag.getBoolean("CategorieSpigotBungeecord")
+        );
       case 27:
         return SSELocalStorag.getBoolean("CategorieWeb");
-        break;
       default:
         return false;
-        break;
     }
   }
-
 
   /* isinResourceName */
 
@@ -343,7 +390,6 @@ class ResourceListener {
     }*/
   }
 
-
   /* isinResourceTag */
 
   static isinResourceTag(resourceTag) {
@@ -391,7 +437,6 @@ class ResourceListener {
     }*/
   }
 
-
   /*
     loadRandomResources is displaying 3 of my ResourceS
     Providing the SpigotSearchEngine-Service is time intensive and it costs money...
@@ -400,33 +445,42 @@ class ResourceListener {
   */
 
   static loadRandomResources() {
-    fetch('https://fof1092.de/Plugins/SSE/randomPlugin.php')
-     .then(
-       function(response) {
-         if (response.status !== 200) {
-           console.log('[SpigotMCSearchEngine] RandomPlugin - Error, Status Code: ' + response.status);
-           return;
-         }
+    fetch("https://fof1092.de/Plugins/SSE/randomPlugin.php")
+      .then(function (response) {
+        if (response.status !== 200) {
+          console.log(
+            "[SpigotMCSearchEngine] RandomPlugin - Error, Status Code: " +
+              response.status
+          );
+          return;
+        }
 
-         response.json().then(function(data) {
+        response.json().then(function (data) {
+          let featuredResources = "";
 
-           let featuredResources = '';
+          for (let resource of data) {
+            featuredResources += ResourceListener.getFeaturedResource(resource);
+          }
 
-           for (let resource of data) {
-             featuredResources += ResourceListener.getFeaturedResource(resource);
-           }
+          let divSection = document.createElement("div");
+          divSection.classList.add("section");
+          divSection.innerHTML =
+            '<h2 class="MyFeaturedResourcesTextHeading">Plugins from <a href="resources/authors/43899/" class="username">F_o_F_1092</a>, the Developer of the SpigotSearchEngine Extension :)</h2><ol class="featuredResourceList">' +
+            featuredResources +
+            '</ol><div class="MyFeaturedResourcesListPlacholder"></div>';
 
-           let divSection = document.createElement("div");
-           divSection.classList.add('section');
-           divSection.innerHTML = '<h2 class="MyFeaturedResourcesTextHeading">Plugins from <a href="resources/authors/43899/" class="username">F_o_F_1092</a>, the Developer of the SpigotSearchEngine Extension :)</h2><ol class="featuredResourceList">' + featuredResources + '</ol><div class="MyFeaturedResourcesListPlacholder"></div>';
-
-           divActionFilterRow.parentNode.insertBefore(divSection, divActionFilterRow.nextSibling);
-         });
-       }
-     )
-     .catch(function(err) {
-       console.log('[SpigotMCSearchEngine] RandomPlugin - Fetching Error: ', err);
-     });
+          divActionFilterRow.parentNode.insertBefore(
+            divSection,
+            divActionFilterRow.nextSibling
+          );
+        });
+      })
+      .catch(function (err) {
+        console.log(
+          "[SpigotMCSearchEngine] RandomPlugin - Fetching Error: ",
+          err
+        );
+      });
 
     /* CSP
     
@@ -434,8 +488,6 @@ class ResourceListener {
     divSection.classList.add('section');
     divSection.innerHTML = '<h2 class="MyFeaturedResourcesTextHeading"><a href="https://goo.gl/BbtCLe" class="username">ChristmasSurprisePlus - From the Developer of the SpigotSearchEngine Extension! :)</a></h2><a href="https://goo.gl/BbtCLe"><img src="https://i.imgur.com/igh1L7W.png" style="width:100%" alt="ChristmasSurprisePlus"></a><div class="MyFeaturedResourcesListPlacholder"></div>';
     divActionFilterRow.parentNode.insertBefore(divSection, divActionFilterRow.nextSibling);*/
-
-
 
     /* Halloween
 
@@ -448,13 +500,31 @@ class ResourceListener {
     divActionFilterRow.parentNode.insertBefore(divSection, divActionFilterRow.nextSibling);*/
   }
 
-
   static getFeaturedResource(resourceData) {
     let resource = new Resource(resourceData);
 
-    return '<li class="featuredResource MyFeaturedResources"><div class="resourceImage"><a href="resources/' + resource.getID() + '/" class="resourceIcon"><img src="' + resource.getIcon() + '" alt=""></a></div><div class="resourceInfo"><h3 class="title"><a href="resources/' + resource.getID() + '/">' + resource.getName() + '</a></h3><div class="tagLine muted">' + resource.getTag() + '</div><div class="details muted"><a href="members/' + resource.getAuthor().getID() + '/" class="username"><span class="style10">' + resource.getAuthor().getName() + '</span></a>, <a href="resources/' + resource.getID() + '/" class="faint"><span class="DateTime">' + resource.getUpdateTime().getDateWithFormat() + '</span></a></div></div></li>';
+    return (
+      '<li class="featuredResource MyFeaturedResources"><div class="resourceImage"><a href="resources/' +
+      resource.getID() +
+      '/" class="resourceIcon"><img src="' +
+      resource.getIcon() +
+      '" alt=""></a></div><div class="resourceInfo"><h3 class="title"><a href="resources/' +
+      resource.getID() +
+      '/">' +
+      resource.getName() +
+      '</a></h3><div class="tagLine muted">' +
+      resource.getTag() +
+      '</div><div class="details muted"><a href="members/' +
+      resource.getAuthor().getID() +
+      '/" class="username"><span class="style10">' +
+      resource.getAuthor().getName() +
+      '</span></a>, <a href="resources/' +
+      resource.getID() +
+      '/" class="faint"><span class="DateTime">' +
+      resource.getUpdateTime().getDateWithFormat() +
+      "</span></a></div></div></li>"
+    );
   }
-
 
   /*
     The getUserID function is an optional part witch is used to block Users who are misusing the Service
@@ -465,9 +535,13 @@ class ResourceListener {
     let userID = "&UserID=" + SSELocalStorag.getItem("UserID");
 
     let links = document.links;
-    for(let i = 0; i < links.length; i++) {
+    for (let i = 0; i < links.length; i++) {
       if (links[i].innerHTML == "Your Profile Page") {
-        userID += "&SpigotID=" + links[i].href.replace("https://www.spigotmc.org/members/", "").replace("/", "");
+        userID +=
+          "&SpigotID=" +
+          links[i].href
+            .replace("https://www.spigotmc.org/members/", "")
+            .replace("/", "");
         break;
       }
     }
