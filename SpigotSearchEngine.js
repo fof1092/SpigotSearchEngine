@@ -107,4 +107,4 @@ SSEGuiManager.showSortByBox();
 
 /* Cosmetic remove */
 
-document.getElementsByClassName("extraLinks")[0].remove();
+//document.getElementsByClassName("extraLinks")[0].remove();

@@ -3,7 +3,7 @@
   The SSElocalStorage.js is setting up at the first use
 */
 
-let SSEVersion = "2.0.12";
+let SSEVersion = "2.1.0";
 
 class SSELocalStorag {
   /*
@@ -33,7 +33,6 @@ class SSELocalStorag {
 }
 
 /* LocalStorage Setup */
-CategorieSpigotChat;
 
 let types = [
   // Categories
@@ -81,6 +80,7 @@ let types = [
   { type: "Version_v1_14", value: true },
   { type: "Version_v1_15", value: true },
   { type: "Version_v1_16", value: true },
+  { type: "Version_v1_17", value: true },
   { type: "Version_Unknown", value: true },
 
   { type: "SearchOnPluginName", value: true },
