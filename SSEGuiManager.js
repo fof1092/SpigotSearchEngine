@@ -366,6 +366,7 @@ class SSEGuiManager {
 
     let types = [
       { type: "Version_Unknown", text: " Unknown" },
+      { type: "Version_v1_20", text: " 1.20" },
       { type: "Version_v1_19", text: " 1.19" },
       { type: "Version_v1_18", text: " 1.18" },
       { type: "Version_v1_17", text: " 1.17" },
