@@ -54,6 +54,7 @@ bntSearchResources.onclick = function() {
 
         /* Cosmetic remove */
         document.getElementsByClassName("PageNav")[0].remove();
+        document.getElementsByClassName("extraLinks")[0].remove();
 
         firstClick = false;
       }
@@ -101,7 +102,7 @@ SSEGuiManager.showSearchOn();
 SSEGuiManager.showCategories();
 SSEGuiManager.showVersions();
 SSEGuiManager.showSearchType();
-SSEGuiManager.showExtras();
+//SSEGuiManager.showExtras();
 SSEGuiManager.showSortByBox();
 
 

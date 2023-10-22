@@ -1,11 +1,11 @@
-class ResourceSupportedMCVersions {
+class ResourceTestedMinecraftVersions {
 
-  constructor(supportedMCVersionsObj) {
-    if (supportedMCVersionsObj == null) {
+  constructor(testedMinecraftVersionsObj) {
+    if (testedMinecraftVersionsObj == null) {
       this.versions = [];
       this.versions.push("Unknown");
     } else {
-      this.versions = supportedMCVersionsObj;
+      this.versions = testedMinecraftVersionsObj;
     }
   }
 

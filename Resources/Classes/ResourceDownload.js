@@ -1,42 +1,21 @@
 class ResourceDownload {
 
-  constructor(downloadObj, downloadsObj) {
-    this.sizeType = downloadObj.sizeType;
-    this.size = downloadObj.size;
-    this.link = downloadObj.link;
-    this.type = downloadObj.type;
-
-    this.downloads = downloadsObj;
+  constructor(downloadObj) {
+    this.count = downloadObj.count;
   }
 
-  getSizeType() {
-    return this.sizeType;
+  getCount() {
+    return this.count;
   }
 
-  getSize() {
-    return this.size;
-  }
-
-  getLink() {
-    return this.link;
-  }
-
-  getType() {
-    return this.type;
-  }
-
-  getDownloads() {
-    return this.downloads;
-  }
-
-  getHTML(isPremium) {
+  getHTML(hasPrice) {
     let downloadText = "Downloads:";
 
-    if (isPremium) {
+    if (hasPrice) {
       downloadText = "Buyers:"
     }
 
-    return '<dl class="resourceDownloads"><dt>' + downloadText + '</dt> <dd>' + this.getDownloads().toLocaleString() + '</dd></dl>';
+    return '<dl class="resourceDownloads"><dt>' + downloadText + '</dt> <dd>' + this.getCount().toLocaleString() + '</dd></dl>';
   }
 
 }

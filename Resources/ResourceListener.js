@@ -16,7 +16,7 @@ class ResourceListener {
 
   static loadResources(inpSearchResourcesText) {
     fetch(
-      "https://fof1092.de/Plugins/SSE/resourceSearch.php?SearchText=" +
+      "https://fof1092.de/Plugins/SSE/resourceSearchV2.php?SearchText=" +
         inpSearchResourcesText.replace(" ", "%20") +
         ResourceListener.getUserID()
     )
@@ -74,16 +74,16 @@ class ResourceListener {
 
       let resourcePoints = 0;
       if (
-        resource.getIcon() !=
+        resource.getIconUrl() !=
         "//static.spigotmc.org/styles/spigot/xenresource/resource_icon.png"
       ) {
         resourcePoints += 50;
       }
 
-      resourcePoints += resource.getDownload().getDownloads();
+      resourcePoints += resource.getDownload().getCount();
       resourcePoints +=
-        resource.getRating().getRaters() *
-        resource.getRating().getRating() *
+        resource.getRating().getValue() *
+        resource.getRating().getCount() *
         10;
 
       resource.setPriority(resourcePoints);
@@ -98,7 +98,7 @@ class ResourceListener {
 
   static sortByDownloads() {
     for (let resource of resources) {
-      resource.setPriority(resource.getDownload().getDownloads());
+      resource.setPriority(resource.getDownload().getCount());
     }
   }
 
@@ -151,15 +151,15 @@ class ResourceListener {
         ) {
           //Selected Categorie Visible
           if (
-            ResourceListener.isCategorieVisible(resource.getCategorie().getID())
+            ResourceListener.isCategorieVisible(resource.getCategorie().getId())
           ) {
             //Selected Version visible
             if (
-              (resource.hasSupportedMCVersions() &&
+              (resource.hastestedMinecraftVersions() &&
                 ResourceListener.isVersionVisible(
-                  resource.getSupportedMCVersions().getVersions()
+                  resource.gettestedMinecraftVersions().getVersions()
                 )) ||
-              !resource.hasSupportedMCVersions()
+              !resource.hastestedMinecraftVersions()
             ) {
               //Extras...
               if (
@@ -210,11 +210,16 @@ class ResourceListener {
             return true;
           }
           break;
-          case "1.19":
-            if (SSELocalStorag.getBoolean("Version_v1_19")) {
-              return true;
-            }
-            break;
+        case "1.20":
+          if (SSELocalStorag.getBoolean("Version_v1_20")) {
+            return true;
+          }
+          break;
+        case "1.19":
+          if (SSELocalStorag.getBoolean("Version_v1_19")) {
+            return true;
+          }
+          break;
         case "1.18":
           if (SSELocalStorag.getBoolean("Version_v1_18")) {
             return true;
@@ -520,21 +525,21 @@ class ResourceListener {
 
     return (
       '<li class="featuredResource MyFeaturedResources"><div class="resourceImage"><a href="resources/' +
-      resource.getID() +
+      resource.getId() +
       '/" class="resourceIcon"><img src="' +
-      resource.getIcon() +
+      resource.getIconUrl() +
       '" alt=""></a></div><div class="resourceInfo"><h3 class="title"><a href="resources/' +
-      resource.getID() +
+      resource.getId() +
       '/">' +
       resource.getName() +
       '</a></h3><div class="tagLine muted">' +
       resource.getTag() +
       '</div><div class="details muted"><a href="members/' +
-      resource.getAuthor().getID() +
+      resource.getAuthor().getId() +
       '/" class="username"><span class="style10">' +
       resource.getAuthor().getName() +
       '</span></a>, <a href="resources/' +
-      resource.getID() +
+      resource.getId() +
       '/" class="faint"><span class="DateTime">' +
       resource.getUpdateTime().getDateWithFormat() +
       "</span></a></div></div></li>"

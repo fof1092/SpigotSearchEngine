@@ -15,9 +15,9 @@ class Resource {
     this.tag = jsonObj.tag;
     this.version = jsonObj.version;
 
-    this.categorie = new ResourceCategorie(jsonObj.categorie);
+    this.categorie = new ResourceCategory(jsonObj.category);
 
-    this.icon = jsonObj.icon;
+    this.iconUrl = jsonObj.iconUrl;
 
     this.author = new ResourceAuthor(jsonObj.author);
 
@@ -25,21 +25,19 @@ class Resource {
       this.pluginContributors = jsonObj.pluginContributors;
     }
 
-    this.submitTime = new ResourceTime(jsonObj.submitTime);
-    this.updateTime = new ResourceTime(jsonObj.updateTime);
+    //this.submitTime = new ResourceTime(jsonObj.submitTime);
+    //this.updateTime = new ResourceTime(jsonObj.updateTime);
+    this.submitTime = new ResourceTime(jsonObj.id);
+    this.updateTime = new ResourceTime(jsonObj.id);
 
     this.rating = new ResourceRating(jsonObj.rating);
-    this.download = new ResourceDownload(jsonObj.download, jsonObj.downloads);
+    this.download = new ResourceDownload(jsonObj.download);
 
-    if (jsonObj.premium != null) {
-      this.premium = new ResourcePremium(jsonObj.premium);
+    if (jsonObj.price != null) {
+      this.price = new ResourcePrice(jsonObj.price);
     }
 
-    this.supportedMCVersions = new ResourceSupportedMCVersions(jsonObj.supportedMCVersions);
-
-    if (jsonObj.pluginLanguages != null) {
-      this.languages = new ResourceLanguage(jsonObj.pluginLanguages);
-    }
+    this.testedMinecraftVersions = new ResourceTestedMinecraftVersions(jsonObj.testedMinecraftVersions);
 
     if (jsonObj.pluginSupportLink != null) {
       this.supportLink = jsonObj.pluginSupportLink;
@@ -65,7 +63,7 @@ class Resource {
 
 
 
-  getID() {
+  getId() {
     return this.id;
   }
 
@@ -87,8 +85,8 @@ class Resource {
   }
 
 
-  getIcon() {
-    return this.icon;
+  getIconUrl() {
+    return this.iconUrl;
   }
 
 
@@ -106,12 +104,12 @@ class Resource {
   }
 
 
-  getPremium() {
-    return this.premium;
+  getPrice() {
+    return this.price;
   }
 
-  isPremium() {
-    return this.getPremium() != null;
+  hasPrice() {
+    return this.getPrice() != null;
   }
 
 
@@ -133,20 +131,12 @@ class Resource {
   }
 
 
-  getSupportedMCVersions() {
-    return this.supportedMCVersions;
+  gettestedMinecraftVersions() {
+    return this.testedMinecraftVersions;
   }
 
-  hasSupportedMCVersions() {
-    return this.getSupportedMCVersions() != null;
-  }
-
-  getLanguages() {
-    return this.languages;
-  }
-
-  hasLanguages() {
-    return this.getLanguages() != null;
+  hastestedMinecraftVersions() {
+    return this.gettestedMinecraftVersions() != null;
   }
 
 
@@ -187,17 +177,20 @@ class Resource {
     var liResourceListItem = document.createElement("li");
     liResourceListItem.classList.add('resourceListItem');
 
-    liResourceListItem.innerHTML = '<div class="listBlock resourceImage"><div class="listBlockInner"><a href="resources/' + this.getID() + '/" class="resourceIcon"><img src="' + this.getIcon() + '" alt=""></a>' + this.getAuthor().getHTMLIcon() + '</div></div>';
+    //liResourceListItem.innerHTML = '<div class="listBlock resourceImage"><div class="listBlockInner"><a href="resources/' + this.getId() + '/" class="resourceIcon"><img src="' + this.getIconUrl() + '" alt=""></a>' + this.getAuthor().getHTMLIcon() + '</div></div>';
+    liResourceListItem.innerHTML = '<div class="listBlock resourceImage"><div class="listBlockInner"><a href="resources/' + this.getId() + '/" class="resourceIcon"><img src="' + this.getIconUrl() + '" alt=""></a></div></div>';
 
 
     let price = '';
-    if (this.isPremium()) {
-      price = this.getPremium().getHTML();
+    if (this.hasPrice()) {
+      price = this.getPrice().getHTML();
     }
 
-    liResourceListItem.innerHTML += '<div class="listBlock main"><div class="listBlockInner">' + price + '<h3 class="title"><a href="resources/' + this.getID() + '">' + this.getName() + ' </a><span class="version">' + this.getVersion() + '</span></h3><div class="resourceDetails muted">' + this.getAuthor().getHTMLName() + '<a href="resources/' + this.getID() + '/" class="faint"><span class="DateTime"> ' + this.getSubmitTime().getDateWithFormat() + '</span></a>' + this.getCategorie().getHTML() + '</div><div class="tagLine">' + this.getTag() + '</div></div></div>';
+    //liResourceListItem.innerHTML += '<div class="listBlock main"><div class="listBlockInner">' + price + '<h3 class="title"><a href="resources/' + this.getId() + '">' + this.getName() + ' </a><span class="version">' + this.getVersion() + '</span></h3><div class="resourceDetails muted">' + this.getAuthor().getHTMLName() + '<a href="resources/' + this.getId() + '/" class="faint"><span class="DateTime"> ' + this.getSubmitTime().getDateWithFormat() + '</span></a>' + this.getCategorie().getHTML() + '</div><div class="tagLine">' + this.getTag() + '</div></div></div>';
+    liResourceListItem.innerHTML += '<div class="listBlock main"><div class="listBlockInner">' + price + '<h3 class="title"><a href="resources/' + this.getId() + '">' + this.getName() + ' </a><span class="version">' + this.getVersion() + '</span></h3><div class="resourceDetails muted">' + this.getAuthor().getHTMLName() + '<a href="resources/' + this.getId() + '/" class="faint"><span class="DateTime"></span></a>' + this.getCategorie().getHTML() + '</div><div class="tagLine">' + this.getTag() + '</div></div></div>';
 
-    liResourceListItem.innerHTML += '<div class="listBlock resourceStats"><div class="listBlockInner">' + this.getRating().getHTML() + '<div class="pairsJustified">' + this.getDownload().getHTML(this.isPremium()) + '<dl class="resourceUpdated"><dt>Updated:</dt> <dd><a href="resources/' + this.getID() + '/updates" class="concealed"><abbr class="DateTime">' + this.getUpdateTime().getDateWithFormat() + '</abbr></a></dd></dl></div></div></div>';
+    //liResourceListItem.innerHTML += '<div class="listBlock resourceStats"><div class="listBlockInner">' + this.getRating().getHTML() + '<div class="pairsJustified">' + this.getDownload().getHTML(this.hasPrice()) + '<dl class="resourceUpdated"><dt>Updated:</dt> <dd><a href="resources/' + this.getId() + '/updates" class="concealed"><abbr class="DateTime">' + this.getUpdateTime().getDateWithFormat() + '</abbr></a></dd></dl></div></div></div>';
+    liResourceListItem.innerHTML += '<div class="listBlock resourceStats"><div class="listBlockInner">' + this.getRating().getHTML() + '<div class="pairsJustified">' + this.getDownload().getHTML(this.hasPrice()) + '<dl class="resourceUpdated"><dt>Updates: </dt> <dd><a href="resources/' + this.getId() + '/updates" class="concealed"><abbr class="DateTime"> Link</abbr></a></dd></dl></div></div></div>';
 
     return liResourceListItem;
   }

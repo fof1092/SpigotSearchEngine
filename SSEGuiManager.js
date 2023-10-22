@@ -366,6 +366,7 @@ class SSEGuiManager {
 
     let types = [
       { type: "Version_Unknown", text: " Unknown" },
+      { type: "Version_v1_20", text: " 1.20" },
       { type: "Version_v1_19", text: " 1.19" },
       { type: "Version_v1_18", text: " 1.18" },
       { type: "Version_v1_17", text: " 1.17" },
@@ -437,7 +438,7 @@ class SSEGuiManager {
 
     let types = [
       { type: "SortByPriority", text: "Plugin Priority" },
-      { type: "SortByUpdate", text: "Last Update" },
+      //{ type: "SortByUpdate", text: "Last Update" },
       { type: "SortByDownloads", text: "Downloads" },
       { type: "SortByRealeaseDate", text: "Realease Date" },
     ];
@@ -479,14 +480,14 @@ class SSEGuiManager {
       case "SortByPriority":
         return 0;
         break;
-      case "SortByUpdate":
+      /*case "SortByUpdate":
+        return 1;
+        break;*/
+      case "SortByDownloads":
         return 1;
         break;
-      case "SortByDownloads":
-        return 2;
-        break;
       case "SortByRealeaseDate":
-        return 3;
+        return 2;
         break;
     }
   }
@@ -498,13 +499,13 @@ class SSEGuiManager {
       case 0:
         return "SortByPriority";
         break;
-      case 1:
+      /*case 1:
         return "SortByUpdate";
-        break;
-      case 2:
+        break;*/
+      case 1:
         return "SortByDownloads";
         break;
-      case 3:
+      case 2:
         return "SortByRealeaseDate";
         break;
     }
@@ -515,7 +516,7 @@ class SSEGuiManager {
   static setSortByBoxButtonColor() {
     let types = [
       { type: "SortByPriority" },
-      { type: "SortByUpdate" },
+      //{ type: "SortByUpdate" },
       { type: "SortByDownloads" },
       { type: "SortByRealeaseDate" },
     ];
@@ -536,13 +537,13 @@ class SSEGuiManager {
     }
   }
 
-  /* showExtras */
+  /* showExtras 
 
   static showExtras() {
     let divSortByBox = document.createElement("div");
     divSortByBox.classList.add("SortByBox");
 
-    /* Primary Content Menu Heade */
+    // Primary Content Menu Heade
 
     let divPrimaryContentMenuHeader = document.createElement("div");
     divPrimaryContentMenuHeader.classList.add("primaryContent");
@@ -553,7 +554,7 @@ class SSEGuiManager {
     divPrimaryContentMenuHeader.appendChild(tnPrimaryContentMenuHeader);
     divSortByBox.appendChild(divPrimaryContentMenuHeader);
 
-    /* Primary Content Menu Heade */
+    // Primary Content Menu Heade
 
     let ulBlockLinksList = document.createElement("ul");
     ulBlockLinksList.classList.add("blockLinksList");
@@ -582,12 +583,12 @@ class SSEGuiManager {
       ulBlockLinksList.appendChild(liExtras);
     }
 
-    /* Final adding */
+    // Final adding
     divSortByBox.appendChild(ulBlockLinksList);
     document.getElementById("divSortBox").appendChild(divSortByBox);
-  }
+  }*/
 
-  /* Set Sort By Box Button Color */
+  /* Set Sort By Box Button Color 
 
   static unsetExtras(exceptFrom) {
     let types = [{ type: "Extras_OnlyOpenSource", text: " Only Open Source" }];
@@ -605,7 +606,7 @@ class SSEGuiManager {
         }
       }
     }
-  }
+  }*/
 
   static isShowExtrasSet(type) {
     if (showExtras == type) {

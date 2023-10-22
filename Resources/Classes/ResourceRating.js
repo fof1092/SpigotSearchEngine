@@ -1,20 +1,20 @@
 class ResourceRating {
 
   constructor(ratingObj) {
-    this.raters = ratingObj.raters;
-    this.rating = ratingObj.rating;
+    this.value = ratingObj.value;
+    this.count = ratingObj.count;
   }
 
-  getRaters() {
-    return this.raters;
+  getValue() {
+    return this.value;
   }
 
-  getRating() {
-    return this.rating;
+  getCount() {
+    return this.count;
   }
 
   getHTML() {
-    let rating = this.getRating();
+    let rating = this.getValue();
     let ratingText = '';
 
     for (let i = 0; i < 5; i++) {
@@ -31,6 +31,6 @@ class ResourceRating {
     }
 
 
-    return '<div class="rating"><dl><dt class="prompt muted"></dt><dd><span class="ratings" title="' + this.getRating() + '">' + ratingText + '</span><span class="RatingValue"><span class="Number" itemprop="average">5</span>/<span itemprop="best">5</span>,</span><span class="Hint">' + this.getRaters() + ' ratings</span></dd></dl></div>';
+    return '<div class="rating"><dl><dt class="prompt muted"></dt><dd><span class="ratings" title="' + this.getValue() + '">' + ratingText + '</span><span class="RatingValue"><span class="Number" itemprop="average">5</span>/<span itemprop="best">5</span>,</span><span class="Hint">' + this.getCount() + ' ratings</span></dd></dl></div>';
   }
 }
