@@ -210,6 +210,11 @@ class ResourceListener {
             return true;
           }
           break;
+        case "1.21":
+          if (SSELocalStorag.getBoolean("Version_v1_21")) {
+          return true;
+          }
+          break;
         case "1.20":
           if (SSELocalStorag.getBoolean("Version_v1_20")) {
             return true;
